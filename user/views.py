@@ -48,7 +48,7 @@ def registerView(request):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
 
-        user = User.objects.create_user(email=email, name=name, dob=dob, phone=phone, gender=gender)
+        user = User.objects.create(email=email, name=name, dob=dob, phone=phone, gender=gender)
         user.set_password(password)
         user.save()
         return redirect('user_login')
@@ -57,7 +57,7 @@ def registerView(request):
 
 
 @login_required(login_url='login')
-def appointmentView(request):
+def bookAppointment(request):
     if request.method == 'POST':
 
         age = request.POST.get('age')
@@ -84,4 +84,18 @@ def appointmentView(request):
         )
         return JsonResponse({'success': 'Appointment booked successfully'})
     
-    return render(request, 'user/appointment.html')
+    doctCategory = doctSpecialization.objects.all()
+    return render(request, 'user/appointment.html', {'doctCategory': doctCategory})
+
+
+@login_required(login_url='login')
+def appointmentHistory(request):
+    appointments = Appointment.objects.filter(user = request.user)
+    return render(request, 'user/view_appointment.html', {'appointments': appointments})
+
+
+@login_required(login_url='login')
+def getDoctors(request):
+    doctCategory = request.GET.get('doctCategory')
+    doctors = Doctor.objects.filter(specialization__name = doctCategory)
+    return JsonResponse({'doctors': list(doctors.values())}, status = 200)

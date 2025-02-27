@@ -31,10 +31,12 @@ class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments')
     age = models.PositiveSmallIntegerField()
     doctor = models.ForeignKey("Doctor", on_delete=models.CASCADE, related_name='appointments')
-    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')], default='pending')
+    status = models.CharField(max_length=20, choices=[('confirmed', 'Confirmed'), ('cancelled', 'Cancelled'), ('completed','Completed')], default='confirmed')
 
     appointment_date = models.DateField()
     appointment_time = models.TimeField(null=True, blank=True)
+
+    prescription = models.FileField(upload_to='prescriptions/', null=True, blank=True)
 
     booked_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -58,9 +60,10 @@ class Doctor(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    password = models.CharField(max_length=256)
     dob = models.DateField()
     phone = models.CharField(max_length=11)
-    email = models.EmailField(max_length=100)
     gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')])
     image = models.ImageField(upload_to='doct_images/', null=True, blank=True)
     qualification = models.CharField(max_length=100)
@@ -80,11 +83,11 @@ class Doctor(models.Model):
     
 
 class doctSpecialization(models.Model):
-    specialization = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     desc = models.CharField(max_length=250, null=True, blank=True)
 
     def __str__(self):
-        return self.specialization
+        return self.name
 
     # SPECIALIZATION       SPECIALIZATION DESC
 
