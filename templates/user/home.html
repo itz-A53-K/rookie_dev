@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">DocCare</div>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="appointment.html">Book Appointment</a></li>
+            <li><a href="#footer">About</a></li>
+            <li><a href="login.html"><button class="login-btn" type="button">Login / Sign Up</button></a></li>
+            
+        </ul>
+    </nav>
+    <div class="banner">
+        <div class="container"> 
+            <h1>View Doctors, Book an Appointment</h1>
+            <h3>Book an Appointment one of the best doctors in the city</h3>
+            <button class="appointment-btn">Book & Appointment</button>
+        </div>
+            </div>
+    </div>
+    <section class="steps-section">
+        <h2>Discover the Online Appointment!</h2>
+        <p>A step-by-step guide to build an on-demand appointment for patients</p>
+        <div class="steps-container">
+            <div class="step-box">
+                <img src="/img/register.png" alt="Find a Doctor">
+                <h3>REGISTER</h3>
+                <p>With more than 1000+ doctors, we provide the best healthcare service.</p>
+            </div>
+            <div class="step-box">
+                <img src="/img/view.jpg" alt="View Doctor">
+                <h3>VIEW DOCTOR</h3>
+                <p>Share your health concern and get assigned to a top doctor in your region.</p>
+            </div>
+            <div class="step-box">
+                <img src="/img/visit.png" alt="Book a Visit">
+                <h3>BOOK A VISIT</h3>
+                <p>Book your time slot with a doctor from your comfort zone.</p>
+            </div>
+        </div>
+        <button class="find-doctor-btn">Find Doctor →</button>
+    </section>
+    <section class="clinic-specialties">
+        <h2>Clinic and Specialities</h2>
+        <p>Find experienced doctors across all specialties</p>
+        <div class="specialties-wrapper">
+            <div class="specialties-container" id="specialties_container">
+       
+            </div>
+        </div>
+    </section>
+     <!-- Chat Button -->
+     <div class="chat-button" onclick="openChat()">✉️</div>
+
+     <!-- Chat Popup -->
+     <div class="chat-popup" id="chatPopup">
+         <div class="chat-header">
+             Chat Support
+             <span class="close-chat" onclick="closeChat()">×</span>
+         </div>
+         <div class="chat-body">
+             <p><strong>Bot:</strong> Hello! How can I help you?</p>
+         </div>
+         <div class="chat-input">
+             <input type="text" placeholder="Type a message...">
+             <button>Send</button>
+         </div>
+     </div>
+    <footer class="footer" id="footer">
+        <div>
+            <h3>DocCare</h3>
+            <p>DocCare is a  startup company empaneled with Doctors, Hospitals, touching lives of over  million patients.</p>
+        </div>
+        <div>
+            <h3>For Information</h3>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Booking Guide</a></li>
+                <li><a href="#">Pharmacy</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press Release</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Helpful Links</h3>
+            <ul>
+                <li><a href="#">Book Appointment</a></li>
+                <li><a href="#">Search for doctors</a></li>
+                <li><a href="#">Book Lab/Diagnostics Test</a></li>
+                <li><a href="#">Register</a></li>
+                <li><a href="#">SMS Booking</a></li>
+                <li><a href="#">Services</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Contact Us</h3>
+            <p>Rookie Developer, Nalbari, Assam</p>
+            <p>+91 111111111</p>
+            <p>Customer Support: support@DocCarebook.com</p>
+            <p>Official Queries: info@DocCarebook.com</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
