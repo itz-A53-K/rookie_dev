@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+           
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+
+            .form-group{
+                margin: 1rem 0;
+            }
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #007bff;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 90%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 50%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Doctor Registration</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group"><label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                </div>
+            <div class="form-group"> <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+           <div class="form-group"> <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            </div>
+           <div class="form-group"> <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required>
+              </div>
+           <div class="form-group"><label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            </div>
+            
+           <div class="form-group"><label for="specialization">Specialization:</label>
+            <select id="specialization" name="specialization">
+                <option value="General Physician">General Physician</option>
+                <option value="Cardiologist">Cardiologist</option>
+                <option value="Dentist">Dentist</option>
+                <option value="Neurologist">Neurologist</option>
+                <option value="Urology">Urology</option>
+                <option value="Orthopedic">Orthopedic</option>
+            </select></div>
+            
+            <div class="form-group"> <label for="fees">Consultation Fees:</label>
+                <input type="number" id="fees" name="fees" required>
+                </div>
+           <div class="form-group"> <label for="experience">Years of Experience:</label>
+            <input type="number" id="experience" name="experience" required></div>
+           
+            <div class="form-group"> <label for="available_days">Available Days:</label>
+                <input type="text" id="available_days" name="available_days" placeholder="e.g. Monday to Friday" required>
+                </div>
+           <div class="from-group"><button type="submit">Register</button></div>
+            
+        </form>
+    </div>
+</body>
+</html>

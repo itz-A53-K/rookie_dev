@@ -1,16 +1,12 @@
-{% extends "user/base.html" %}
-
-{% load static %}
-
-{% block title  %}Home{% endblock title  %}
-
-{% block css  %}
-<link rel="stylesheet" href="{% static 'css/user/appointment.css' %}">
-{% endblock css  %}
-
-{% block main %}
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Appointment Booking</title>
+ <link rel="stylesheet" href="appointment.css">
+</head>
+<body>
     <div class="container">
         <h2>Doctor Appointment Booking</h2>
         <form>
@@ -31,6 +27,20 @@
                 <input type="number" id="age" name="age" required>
             </div>
             <div class="form-group">
+                <label for="date">Appointment Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor">Select Specialization</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">-- Choose a Specialization --</option>
+                    <option value="Cardiologist">Cardiologist</option>
+                    <option value="Orthopedic">Orthopedic</option>
+                    <option value="Neurologist ">Neurologist </option>
+                    <option value="Dentist  ">Dentist  </option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="doctor">Select Doctor</label>
                 <select id="doctor" name="doctor" required>
                     <option value="">-- Choose a Doctor --</option>
@@ -39,23 +49,11 @@
                     <option value="Dr. Brown">Dr. Brown</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="date">Appointment Date</label>
-                <input type="date" id="date" name="date" required>
-            </div>
-            <div class="form-group">
-                <label for="time">Preferred Time</label>
-                <input type="time" id="time" name="time" required>
-            </div>
+           
             <div class="form-group">
                 <button type="submit">Book Appointment</button>
             </div>
         </form>
     </div>
-    
-    
-{% endblock main %}
-
-{% block js %}
-<script src="{% static 'js/script.js' %}"></script>
-{% endblock js %}
+</body>
+</html>
