@@ -35,19 +35,13 @@ def loginView(request):
 
 
 
-@login_required(login_url='doct_login')
-def logoutView(request):
-    logout(request)
-    return redirect('login')
-
-
 @login_required(login_url='login')
 def appointmentView(request):
     if request.method == 'POST':
         id = request.POST.get('id')
         appointment = Appointment.objects.get(id=id)
 
-        return render(request, 'doct/appointment.html', {'appointment': appointment})
+        return render(request, 'doct/appointment_details.html', {'appointment': appointment})
 
 
 @login_required(login_url='doct_login')
@@ -61,4 +55,4 @@ def addPrescription(request):
         appointment.status = 'completed'
         appointment.save()
 
-        return redirect('home')
+        return JsonResponse({'success': 'Prescription added successfully', "status": 200})

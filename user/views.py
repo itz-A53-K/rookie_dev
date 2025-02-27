@@ -4,7 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
+from django.core.serializers import serialize
+
 from .models import *
+from datetime import datetime
 
 # Create your views here.
 
@@ -23,7 +26,7 @@ def loginView(request):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            # login(request, user)
+            login(request, user)
             return JsonResponse({'success': 'Login successful','status':200, "redirectLink":"/"} )
         else:
             return JsonResponse({'error': 'Invalid credentials','status':401})
@@ -101,6 +104,13 @@ def appointmentHistory(request):
 
 @login_required(login_url='user_login')
 def getDoctors(request):
-    doctCategory = request.GET.get('doctCategory')
-    doctors = Doctor.objects.filter(specialization__name = doctCategory)
-    return JsonResponse({'doctors': list(doctors.values())}, status = 200)
+    if request.method == 'POST':
+        
+        doctCategory = request.POST.get('specialization')
+        date = request.POST.get('date')
+        date_obj = datetime.strptime(date, "%Y-%m-%d")  # Convert string to date
+        day_name = date_obj.strftime("%A") 
+
+        doctors = Doctor.objects.filter(specialization__name = doctCategory, available_days__contains = day_name)
+        doctors_list = list(doctors.values("id", "name", "specialization"))
+        return JsonResponse({'doctors': doctors_list}, status = 200)

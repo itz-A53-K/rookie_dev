@@ -1,28 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
+
 .container {
-    max-width: 500px;
+    width: fit-content;
     background: white;
-    padding: 20px;
-    margin: auto;
+    padding: 1.5rem 2rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
 }
 .container h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #007BFF;
+    margin-bottom: 2rem;
 }
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
 }
 .form-group label {
     display: block;
@@ -45,6 +40,7 @@ body {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    margin: 1rem 0;
 }
 .form-group button:hover {
     background-color: #0056b3;

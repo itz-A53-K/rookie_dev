@@ -30,11 +30,6 @@ def loginView(request):
         
     return render(request, 'user/login.html')
 
-@login_required(login_url='login')
-def logoutView(request):
-    logout(request)
-    return redirect('login')
-
 
 @login_required(login_url='manager_login')
 def addDoctor(request):

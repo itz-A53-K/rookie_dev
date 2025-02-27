@@ -21,6 +21,10 @@
             <li><a href="/">Home</a></li>
             <li><a href="{% url "book_appointment" %}">Book Appointment</a></li>
             <li><a href="#footer">About</a></li>
+
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url "user_logout" %}"><button class="login-btn" type="button">Logout</button></a></li>
+            {% else %}
             <li><a href="{% url "user_login" %}"><button class="login-btn" type="button">Login / Sign Up</button></a></li>
 
             <div class="wrapper">
@@ -31,6 +35,8 @@
                     <img src="{% get_media_prefix %}img/manager.png" alt="">
                 </a>
             </div>
+            
+            {% endif %}
             
         </ul>
     </nav>
