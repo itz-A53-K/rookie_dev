@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from multiselectfield import MultiSelectField
 import uuid
 
+# admin@doccare.in
+# 1234
 
 class User(AbstractUser):
 
@@ -12,13 +14,13 @@ class User(AbstractUser):
     last_name = None
 
     email = models.EmailField(max_length=100, primary_key=True)
-    name = models.CharField(max_length=100)
-    dob = models.DateField()
-    phone = models.CharField(max_length=11)
-    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')])
+    name = models.CharField(max_length=100, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    phone = models.CharField(max_length=11, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], null=True, blank=True)
 
     USERNAME_FIELD="email"
-    REQUIRED_FIELDS= ['name']
+    REQUIRED_FIELDS= []
 
     objects= UserManager()
     def __str__(self):

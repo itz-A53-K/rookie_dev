@@ -9,7 +9,7 @@ from datetime import datetime
 
 # Create your views here.
 
-@login_required(login_url='login')
+@login_required(login_url='doct_login')
 def home(request):
     appointments = Appointment.objects.filter(doctor=request.user.id, status = "confirmed",  appointment_date = datetime.date.today())
     return render(request, 'doct/home.html', {'appointments': appointments})
@@ -27,15 +27,15 @@ def loginView(request):
 
         if doct is not None:
             login(request, doct)
-            return redirect('doct_home')
+            return JsonResponse({'success': 'Login successful','status':200, "redirectLink":"/doct/"} )
         else:
-            return JsonResponse({'error': 'Invalid credentials'})
+            return JsonResponse({'error': 'Invalid credentials','status':401})
         
     return render(request, 'user/login.html')
 
 
 
-@login_required(login_url='login')
+@login_required(login_url='doct_login')
 def logoutView(request):
     logout(request)
     return redirect('login')
@@ -50,7 +50,7 @@ def appointmentView(request):
         return render(request, 'doct/appointment.html', {'appointment': appointment})
 
 
-@login_required(login_url='login')
+@login_required(login_url='doct_login')
 def addPrescription(request):
     if request.method == 'POST':
         id = request.POST.get('id')

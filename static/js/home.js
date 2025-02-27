@@ -26,7 +26,7 @@ html=""
 data.forEach((item)=>{
     html +=` <div class="specialty-box">
                <div>
-                    <img src="/img/${item.img}" alt="${item.txt}">
+                    <img src="/media/img/${item.img}" alt="${item.txt}">
                     <h3>${item.txt}</h3>
                    
                 </div></div>`

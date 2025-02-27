@@ -8,7 +8,7 @@ from user.models import *
 
 # Create your views here.
 
-@login_required(login_url='login')
+@login_required(login_url='manager_login')
 def home(request):
     return render(request, 'user/home.html')
 
@@ -24,9 +24,9 @@ def loginView(request):
 
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return JsonResponse({'success': 'Login successful','status':200, "redirectLink":"/manager/"} )
         else:
-            return JsonResponse({'error': 'Invalid credentials'})
+            return JsonResponse({'error': 'Invalid credentials','status':401})
         
     return render(request, 'user/login.html')
 
@@ -36,7 +36,7 @@ def logoutView(request):
     return redirect('login')
 
 
-@login_required(login_url='login')
+@login_required(login_url='manager_login')
 def addDoctor(request):
     if request.method == 'POST':
         name = request.POST.get('name')

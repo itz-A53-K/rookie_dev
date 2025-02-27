@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Appointment Booking</title>
- <link rel="stylesheet" href="appointment.css">
-</head>
-<body>
+{% extends "user/base.html" %}
+
+{% load static %}
+
+{% block title  %}Home{% endblock title  %}
+
+{% block css  %}
+<link rel="stylesheet" href="{% static 'css/user/appointment.css' %}">
+{% endblock css  %}
+
+{% block main %}
+
+
     <div class="container">
         <h2>Doctor Appointment Booking</h2>
         <form>
@@ -48,5 +52,10 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+    
+    
+{% endblock main %}
+
+{% block js %}
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock js %}

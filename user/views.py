@@ -19,18 +19,19 @@ def loginView(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user = authenticate(request, username=email, password=password)
+
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect('home')
+            # login(request, user)
+            return JsonResponse({'success': 'Login successful','status':200, "redirectLink":"/"} )
         else:
-            return JsonResponse({'error': 'Invalid credentials'})
+            return JsonResponse({'error': 'Invalid credentials','status':401})
         
     return render(request, 'user/login.html')
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def logoutView(request):
     logout(request)
     return redirect("home")
@@ -48,15 +49,19 @@ def registerView(request):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
 
-        user = User.objects.create(email=email, name=name, dob=dob, phone=phone, gender=gender)
-        user.set_password(password)
-        user.save()
-        return redirect('user_login')
+        try:
+            user = User.objects.create(email=email, name=name, dob=dob, phone=phone, gender=gender)
+            user.set_password(password)
+            user.save()
+            return JsonResponse({'success': 'Registration successful','status':200} )
+        except Exception as e:
+            return JsonResponse({'error': str(e),'status':401})
+        
     return render(request, 'user/register.html')
 
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def bookAppointment(request):
     if request.method == 'POST':
 
@@ -94,7 +99,7 @@ def appointmentHistory(request):
     return render(request, 'user/view_appointment.html', {'appointments': appointments})
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def getDoctors(request):
     doctCategory = request.GET.get('doctCategory')
     doctors = Doctor.objects.filter(specialization__name = doctCategory)

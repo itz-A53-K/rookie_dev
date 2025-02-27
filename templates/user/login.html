@@ -1,17 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Sign-Up</title>
-  <link rel="stylesheet" href="login.css">
-</head>
-<body>
+{% extends "user/base.html" %}
+
+{% load static %}
+
+{% block title  %}User Login{% endblock title  %}
+
+{% block css  %}
+<link rel="stylesheet" href="{% static 'css/user/login.css' %}">
+{% endblock css  %}
+
+{% block main %}
+
+
     <div class="container">
         <!-- Login Form -->
         <div id="loginForm">
             <h2>Login</h2>
-            <form>
+            <form method="post" id= "form_login">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="login-email">Email</label>
                     <input type="email" id="login-email" name="email" required>
@@ -28,7 +33,8 @@
         <!-- Sign-Up Form -->
         <div id="signupForm" class="hidden">
             <h2>Sign Up</h2>
-            <form>
+            <form method="post" id="form_register" >
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="signup-name">Full Name</label>
                     <input type="text" id="signup-name" name="name" required>
@@ -60,21 +66,11 @@
         </div>
     </div>
 
-    <script>
-        function toggleForms() {
-            document.getElementById("loginForm").classList.toggle("hidden");
-            document.getElementById("signupForm").classList.toggle("hidden");
-        }
+        
+{% endblock main %}
 
-         // Check URL for "doct" or "manager" and hide sign-up form
-        window.onload = function() {
-            let currentURL = window.location.href;
-            if (currentURL.includes("doct") || currentURL.includes("manager")) {
-                document.getElementById("signUpForm").remove();
-                document.getElementById("signupLink").remove();
-                document.querySelector("#loginForm a").classList.add("hidden");
-            }
-        };
-    </script>
-</body>
-</html>
+{% block js %}
+
+    <script src="{% static 'js/login.js' %}"></script>
+
+    {% endblock js %}
