@@ -57,14 +57,14 @@
         Chat Support
         <span class="close-chat" onclick="closeChat()">×</span>
       </div>
-      <div class="chat-body">
-        <p>
-          <strong>Bot:</strong> Hello! How can I help you?
-        </p>
+      <div class="chat-body" id="chatBody">
       </div>
       <div class="chat-input">
-        <input type="text" placeholder="Type a message..." />
-        <button>Send</button>
+        <form id ="chat">
+          {% csrf_token %}
+          <input type="text" name="msg" class="msg" placeholder="Type a message..." />
+          <button type="submit">Send</button>
+        </form>
       </div>
     </div>
   </section>

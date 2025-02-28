@@ -135,6 +135,7 @@
             data: data,
             success: function(resp) {
                 if (resp.status == 200) {
+                    alert("Appointment booked successfully. Your expected visit time is " + resp.time);
                     
                 }
                 else if (resp.status == 400) {

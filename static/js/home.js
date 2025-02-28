@@ -41,3 +41,35 @@ function openChat() {
 function closeChat() {
     document.getElementById("chatPopup").style.display = "none";
 }
+
+
+$("#chat").submit(function(e) {
+    e.preventDefault()
+    let form = $(e.target)
+    let data = form.serialize()
+    msg = $("#chat .msg").val()
+
+    if (msg != ""){
+        $("#chatBody").append(`<p>
+        <strong>You:</strong> ${msg}
+        </p>`)
+        form[0].reset()
+        //disable form
+        $("#chat").prop("disabled", true)
+        
+        $.ajax({
+            url: "/chat/",
+            type: "POST",
+            data: data,
+            success: function(resp) {
+                console.log(resp);
+                if (resp.status == 200) {
+                    $("#chatBody").append(`<p>
+                        <strong>Bot:</strong> ${resp.msg.response}
+                        </p>`)
+                        $("#chat").prop("disabled", false)
+                }
+            }
+        });
+    }
+});

@@ -8,6 +8,7 @@ from django.core.serializers import serialize
 
 from .models import *
 from datetime import datetime
+import requests, json
 
 # Create your views here.
 
@@ -137,3 +138,34 @@ def appointmentSuccess(request):
 def doctors(request):
     doctors = Doctor.objects.all()
     return render(request, 'user/doctors.html', {'doctors': doctors})
+
+def chat(request):
+    if request.method == 'POST':
+        msg = request.POST.get('msg')  # Get message from request
+
+        if not msg:
+            return JsonResponse({'error': 'No message provided', 'status': 400})
+
+        url = "https://ce38-34-105-54-130.ngrok-free.app/predict"  # Fixed URL formatting
+
+        headers = {
+            "Content-Type": "application/json",  # Ensure JSON is sent
+            "ngrok-skip-browser-warning": "abc"
+        }
+
+        payload = {"message": msg}  # Create JSON payload
+
+
+        try:
+            resp = requests.post(url, json=payload, headers=headers)
+
+            print(resp)
+
+            if resp.status_code == 200:
+                return JsonResponse({'msg': resp.json(), "status": 200})  # Use .json() to parse response 
+            else:
+                return JsonResponse({'error': 'Failed to get response', 'status': resp.status_code})
+        except requests.exceptions.RequestException as e:
+            return JsonResponse({'error': str(e), 'status': 500})  # Handle request errors
+
+    return JsonResponse({'error': 'Invalid request method', 'status': 405})

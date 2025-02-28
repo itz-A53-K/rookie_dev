@@ -44,7 +44,9 @@ def appointmentDetails(request):
 
     appointment = Appointment.objects.get(id=id)
 
-    return render(request, 'doct/appointment_details.html', {'appointment': appointment})
+    history = Appointment.objects.filter(user = appointment.user, status = "completed")
+
+    return render(request, 'doct/appointment_details.html', {'appointment': appointment, "history": history})
 
 
 @login_required(login_url='doct_login')

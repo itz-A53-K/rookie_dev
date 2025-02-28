@@ -11,4 +11,5 @@ urlpatterns = [
     path('getDoctors/', views.getDoctors, name='get_doctors'), 
     path('appointment-success/', views.appointmentSuccess, name='appointment_success'),
     path("doctors/", views.doctors, name="doctors"),
+    path('chat/', views.chat, name='chat'),
 ]
