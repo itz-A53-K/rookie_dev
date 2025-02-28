@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+body,html{
+    width: 100%;
+}
 
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -13,6 +16,7 @@ a {
 }
 
 main {
+    width: 100%;
     position: relative;
     min-height: 85vh;
     display: flex;

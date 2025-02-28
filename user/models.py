@@ -60,7 +60,7 @@ class Doctor(models.Model):
         ("Sun", ("Sunday")),
     )
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.IntegerField(primary_key=True, auto_created=True, editable=False)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=256)

@@ -5,13 +5,14 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from user.models import *
-from datetime import datetime
+from datetime import datetime, date
 
 # Create your views here.
 
-@login_required(login_url='doct_login')
 def home(request):
-    appointments = Appointment.objects.filter(doctor=request.user.id, status = "confirmed",  appointment_date = datetime.date.today())
+    if "doctor_id" not in request.session:
+        return redirect("doct_login")
+    appointments = Appointment.objects.filter(doctor= request.session["doctor_id"], status = "confirmed",  appointment_date = date.today())
     return render(request, 'doct/home.html', {'appointments': appointments})
 
 
@@ -26,7 +27,7 @@ def loginView(request):
         doct = Doctor.objects.filter(email=email, password=password).first()
 
         if doct is not None:
-            login(request, doct)
+            request.session['doctor_id'] = doct.id 
             return JsonResponse({'success': 'Login successful','status':200, "redirectLink":"/doct/"} )
         else:
             return JsonResponse({'error': 'Invalid credentials','status':401})
@@ -35,13 +36,15 @@ def loginView(request):
 
 
 
-@login_required(login_url='login')
-def appointmentView(request):
-    if request.method == 'POST':
-        id = request.POST.get('id')
-        appointment = Appointment.objects.get(id=id)
+def appointmentDetails(request):
+    if "doctor_id" not in request.session:
+        return redirect("doct_login")
+    
+    id = request.GET.get('appointmentId')
 
-        return render(request, 'doct/appointment_details.html', {'appointment': appointment})
+    appointment = Appointment.objects.get(id=id)
+
+    return render(request, 'doct/appointment_details.html', {'appointment': appointment})
 
 
 @login_required(login_url='doct_login')
