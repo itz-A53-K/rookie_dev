@@ -136,10 +136,13 @@
             success: function(resp) {
                 if (resp.status == 200) {
                     alert("Appointment booked successfully. Your expected visit time is " + resp.time);
+                    form[0].reset();
                     
                 }
                 else if (resp.status == 400) {
-                    alert_show("warnig", resp.error);
+                    alert_show("warning", resp.error);
+                    let select = $("#doctor");
+                    select.addAttr("disabled");
                 }
             }
         })

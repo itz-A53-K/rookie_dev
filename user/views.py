@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.serializers import serialize
 
 from .models import *
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests, json
 
 # Create your views here.
@@ -79,7 +79,9 @@ def bookAppointment(request):
 
         age = request.POST.get('age')
         doctorID = request.POST.get('doctor')
-        appointmentDate = request.POST.get('date')
+        appointmentDateStr = request.POST.get('date')
+
+        appointmentDate = datetime.strptime(appointmentDateStr, "%Y-%m-%d").date()
         
 
         user = request.user
@@ -89,8 +91,15 @@ def bookAppointment(request):
         if applicationCount >= doctor.patient_per_day:
             return JsonResponse({'error': f'No available slots for {appointmentDate}', 'status': 400})
         
-        #time = available_from + (applicationCount * 30 min)
-        appointmentTime = doctor.available_from + (applicationCount * 30 * 60)
+        # Assuming doctor.available_from is a `time` object
+        available_from_time = doctor.available_from
+
+        # Convert `available_from` to a `datetime.datetime` object using the appointment date
+        available_from_datetime = datetime.combine(appointmentDate, available_from_time)
+
+        # Now add the timedelta
+        appointmentTime = available_from_datetime + timedelta(minutes=applicationCount * 30)
+
 
         Appointment.objects.create(
             user = user,
@@ -110,7 +119,7 @@ def bookAppointment(request):
     return render(request, 'user/book_appointment.html', {'doctCategory': doctCategory})
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def appointmentHistory(request):
     appointments = Appointment.objects.filter(user = request.user)
     return render(request, 'user/view_appointment.html', {'appointments': appointments})

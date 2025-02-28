@@ -21,7 +21,6 @@
             <li><a href="/">Home</a></li>
             <li><a href="{% url "book_appointment" %}">Book Appointment</a></li>
 
-            <li><a href="{% url "appointment_history" %}">Appointment History</a></li>
             <li><a href="{% url "doctors" %}">Doctors</a></li>
             <li><a href="#footer">About</a></li>
 
@@ -33,9 +32,6 @@
             <div class="wrapper">
                 <a href="{% url "doct_login" %}" title="Doctor login">
                     <img src="{% get_media_prefix %}img/doctor.jpeg" alt="">
-                </a>
-                <a href="{% url "manager_login" %}" title="Manager Login">
-                    <img src="{% get_media_prefix %}img/manager.png" alt="">
                 </a>
             </div>
             
