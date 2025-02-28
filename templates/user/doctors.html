@@ -1,0 +1,41 @@
+{% extends "user/base.html" %}
+
+{% load static %}
+
+{% block title  %}Our Doctors{% endblock title  %}
+
+{% block css  %}
+<link rel="stylesheet" href="{% static 'css/user/doctors.css' %}">
+{% endblock css  %}
+
+{% block main %}
+<div class="container">
+    <h2>Meet Our Doctors</h2>
+    <div class="doctors-grid">
+        
+        <!-- Doctor 1 -->
+        {%for doctor  in doctors %}
+        <div class="doctor-card">
+            <img src="{%get_media_prefix%}{{doctor.image}}" alt="Dr. John Doe">
+            <h3> {{doctor.name}} </h3>
+            <p>{{doctor.specialization}} | {{doctor.experience}} Years Experience</p>
+            <div class="details">
+                <p><strong>Qualification:</strong> {{doctor.qualification}}</p>
+                <p><strong>Contact:</strong> {{doctor.email}}</p>
+            </div>
+            
+        </div>
+        {% endfor %}
+
+       
+
+    </div>
+</div>
+{% endblock main %}
+
+{% block js %}
+
+    <script src="{% static 'js/login.js' %}"></script>
+
+    {% endblock js %}
+

@@ -1,18 +1,9 @@
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-body {
-    background-color: #f4f4f4;
-    padding: 20px;
-}
 .container {
     max-width: 1200px;
     margin: auto;
     text-align: center;
+    margin: 3rem 0;
 }
 h2 {
     margin-bottom: 20px;

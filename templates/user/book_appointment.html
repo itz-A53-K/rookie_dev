@@ -7,25 +7,27 @@
 {% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/user/appointment.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/user/book_appointment.css' %}" />
 {% endblock %}
 
 {% block main %}
     <div class="container">
         <h2>Doctor Appointment Booking</h2>
         <form>
+            {% csrf_token %}
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" required {% if request.user.name %}value="{{ request.user.name|title }}" disabled {% endif %}>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" {% if request.user.email %}value="{{ request.user.email }}" disabled {% endif %}>
             </div>
             <div class="form-group">
                 <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required>
+                <input type="tel" id="phone" name="phone" required {% if request.user.phone %}value="{{ request.user.phone }}" disabled {% endif %}>
             </div>
+
             <div class="form-group">
                 <label for="age">Age</label>
                 <input type="number" id="age" name="age" required>
@@ -99,19 +101,47 @@
             },
             success: function(resp) {
                 doctors = resp.doctors;
+                console.log(doctors.length);
 
-                let select = $("#doctor");
-                select.removeAttr("disabled");
-                select.empty();  // Clear existing options
-                select.append('<option value="">Select a doctor</option>');
+                if (doctors.length == 0) {
+                    alert_show("warning", "No doctors available for the selected specialization and date.");
+                }
+                else{
 
-                $.each(doctors, function(index, doctor) {
-                    select.append(`<option value="${doctor.id}">${doctor.name}</option>`);
-                });
+                    let select = $("#doctor");
+                    select.removeAttr("disabled");
+                    select.empty();  // Clear existing options
+                    select.append('<option value="">Select a doctor</option>');
+
+                    $.each(doctors, function(index, doctor) {
+                        select.append(`<option value="${doctor.id}">${doctor.name}</option>`);
+                    });
+                }
             }
         })
                 
 
     }
+
+    //form submit
+    $('form').submit(function(e) {
+        e.preventDefault();
+        let form = $(e.target);
+        let data = form.serialize();
+
+        $.ajax({
+            url: "{% url 'book_appointment' %}",
+            type: "POST",
+            data: data,
+            success: function(resp) {
+                if (resp.status == 200) {
+                    
+                }
+                else if (resp.status == 400) {
+                    alert_show("warnig", resp.error);
+                }
+            }
+        })
+    })
 </script>
 {% endblock %}

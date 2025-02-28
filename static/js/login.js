@@ -29,12 +29,14 @@ $("#form_login").submit((e) =>{
         data: data,
         success: function(response){
             if(response.status == 200){
-                msg = 'Login successful!';
                 window.location.href = response.redirectLink;
+                alert_show("success", 'Login successful!');
             }
             else{
-                msg = 'Login failed. Please try again.';
+                alert_show("error", response.error)
             }
+            //reset form
+            form[0].reset()
         },
     })               
 })
@@ -51,10 +53,22 @@ $("#form_register").submit((e) =>{
         success: function(response){
             if(response.status == 200){
                 msg = 'Registration successful! Please login.';
+                $('#signupForm').hide()
+                $('#loginForm').show();
+                alert_show("success", msg);
+            }
+            else if(response.status == 409){
+                msg = response?.msg;
+                $('#signupForm').hide()
+                $('#loginForm').show();
+                alert_show("error", msg);
             }
             else{
                 msg = 'Registration failed. Please try again.';
+                alert_show("error", msg);
             }
+
+            form[0].reset()
         },
     })               
 })

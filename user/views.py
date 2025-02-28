@@ -52,6 +52,10 @@ def registerView(request):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
 
+        isUserExist = User.objects.filter(email=email).exists()
+        if isUserExist:
+            return JsonResponse({'error': 'User already exists','status':409, 'msg': 'User already exists. Please Login!'})
+
         try:
             user = User.objects.create(email=email, name=name, dob=dob, phone=phone, gender=gender)
             user.set_password(password)
@@ -68,9 +72,13 @@ def registerView(request):
 def bookAppointment(request):
     if request.method == 'POST':
 
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+
         age = request.POST.get('age')
         doctorID = request.POST.get('doctor')
-        appointmentDate = request.POST.get('appointmentDate')
+        appointmentDate = request.POST.get('date')
         
 
         user = request.user
@@ -78,7 +86,7 @@ def bookAppointment(request):
         applicationCount = Appointment.objects.filter(doctor = doctor, appointment_date = appointmentDate).count()
 
         if applicationCount >= doctor.patient_per_day:
-            return JsonResponse({'error': f'No available slots for {appointmentDate}'})
+            return JsonResponse({'error': f'No available slots for {appointmentDate}', 'status': 400})
         
         #time = available_from + (applicationCount * 30 min)
         appointmentTime = doctor.available_from + (applicationCount * 30 * 60)
@@ -90,10 +98,15 @@ def bookAppointment(request):
             appointment_date = appointmentDate,
             appointment_time = appointmentTime
         )
-        return JsonResponse({'success': 'Appointment booked successfully'})
+        user.name = name
+        user.email = email
+        user.phone = phone
+        user.save()
+
+        return JsonResponse({'success': 'Appointment booked successfully', 'status': 200, 'time': appointmentTime, 'redirectLink': '/appointment-success'}) 
     
     doctCategory = doctSpecialization.objects.all()
-    return render(request, 'user/appointment.html', {'doctCategory': doctCategory})
+    return render(request, 'user/book_appointment.html', {'doctCategory': doctCategory})
 
 
 @login_required(login_url='login')
@@ -109,8 +122,18 @@ def getDoctors(request):
         doctCategory = request.POST.get('specialization')
         date = request.POST.get('date')
         date_obj = datetime.strptime(date, "%Y-%m-%d")  # Convert string to date
-        day_name = date_obj.strftime("%A") 
+        day_name = date_obj.strftime("%a") 
 
         doctors = Doctor.objects.filter(specialization__name = doctCategory, available_days__contains = day_name)
         doctors_list = list(doctors.values("id", "name", "specialization"))
         return JsonResponse({'doctors': doctors_list}, status = 200)
+
+
+@login_required(login_url='user_login')
+def appointmentSuccess(request):
+    return render(request, 'user/appointment_success.html')
+
+
+def doctors(request):
+    doctors = Doctor.objects.all()
+    return render(request, 'user/doctors.html', {'doctors': doctors})

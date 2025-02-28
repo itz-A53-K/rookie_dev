@@ -20,6 +20,9 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="{% url "book_appointment" %}">Book Appointment</a></li>
+
+            <li><a href="{% url "appointment_history" %}">Appointment History</a></li>
+            <li><a href="{% url "doctors" %}">Doctors</a></li>
             <li><a href="#footer">About</a></li>
 
             {% if request.user.is_authenticated %}
@@ -45,6 +48,8 @@
         {% block main %}
         
         {% endblock main %}
+
+
     </main>
 
     <footer class="footer" id="footer">
@@ -83,8 +88,52 @@
         </div>
     </footer>
 
+    <div id="alert" style="display: none;">
+        
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+
+        function alert_show(type, msg){
+            
+            setTimeout(function(){
+                console.log('called ' + type);
+                $("#alert").css("display", "block");
+
+                if (type == "error") {
+                    $("#alert").html(`
+                        <div class="alert_error">
+                            <strong>Error!</strong> ${msg}
+                        </div>
+                    `);
+                }
+                else if (type == "success") {
+                    $("#alert").html(`
+                        <div class="alert_success">
+                            <strong>Success!</strong> ${msg}
+                        </div>
+                    `);
+                }
+                else if (type == "warning") {
+                    $("#alert").html(`
+                        <div class="alert_warning">
+                            <strong>Warning!</strong> ${msg}
+                        </div>
+                    `);
+                }
+
+                setTimeout(function(){
+                    $("#alert").css("display", "none");
+                }, 6000);
+            }, 100);
+            
+        }
+
+                
+    </script>
 
 
     
