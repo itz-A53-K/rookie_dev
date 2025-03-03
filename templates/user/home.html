@@ -15,8 +15,9 @@
     <div class="banner">
       <div class="container">
         <h1>View Doctors, Book an Appointment</h1>
-        <h3>Book an Appointment one of the best doctors in the city</h3>
-        <a href="{% url "book_appointment" %}" class="appointment-btn">Book & Appointment</a>
+        <h3>Book an Appointment with one of our best doctors in the city <br> Or get an AI based suggestion for any health concern.</h3>
+        <a href="{% url "book_appointment" %}" class="appointment-btn">Book an Appointment</a>
+        <button class="appointment-btn" style="margin-top: 0;" onclick="openChat()">Ask ChatBot</button>
       </div>
     </div>
     <section class="steps-section">
@@ -26,12 +27,12 @@
         <div class="step-box">
           <img src="{% get_media_prefix %}img/register.png" alt="Find a Doctor" />
           <h3>REGISTER</h3>
-          <p>With more than 1000+ doctors, we provide the best healthcare service.</p>
+          <p>Register yourself to consult with our best doctors.</p>
         </div>
         <div class="step-box">
           <img src="{% get_media_prefix %}img/view.jpg" alt="View Doctor" />
           <h3>VIEW DOCTOR</h3>
-          <p>Share your health concern and get assigned to a top doctor in your region.</p>
+          <p>With most experienced doctors, we provide the best healthcare service.</p>
         </div>
         <div class="step-box">
           <img src="{% get_media_prefix %}img/visit.png" alt="Book a Visit" />
@@ -48,7 +49,7 @@
       </div>
     </section>
     <!-- Chat Button -->
-    <div class="chat-button" onclick="openChat()">✉️</div>
+    <div class="chat-button" onclick="openChat()">🤖</div>
 
     <!-- Chat Popup -->
     <div class="chat-popup" id="chatPopup">
@@ -61,7 +62,7 @@
       <div class="chat-input">
         <form id ="chat">
           {% csrf_token %}
-          <input type="text" name="msg" class="msg" placeholder="Type a message..." />
+          <input type="text" name="msg" class="msg" placeholder="Type a message..." autocomplete="off" />
           <button type="submit">Send</button>
         </form>
       </div>

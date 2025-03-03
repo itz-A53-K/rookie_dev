@@ -12,7 +12,7 @@ from datetime import datetime, date
 def home(request):
     if "doctor_id" not in request.session:
         return redirect("doct_login")
-    appointments = Appointment.objects.filter(doctor= request.session["doctor_id"], status = "confirmed",)
+    appointments = Appointment.objects.filter(doctor= request.session["doctor_id"])
     return render(request, 'doct/home.html', {'appointments': appointments})
 
 

@@ -40,6 +40,7 @@ function openChat() {
 }
 function closeChat() {
     document.getElementById("chatPopup").style.display = "none";
+    $("#chatBody").html("")
 }
 
 

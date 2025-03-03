@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-  Home
+  Book Appointment
 {% endblock %}
 
 {% block css %}
@@ -12,7 +12,7 @@
 
 {% block main %}
     <div class="container">
-        <h2>Doctor Appointment Booking</h2>
+        <h2>Get An Appointment</h2>
         <form>
             {% csrf_token %}
             <div class="form-group">
@@ -130,7 +130,7 @@
         let data = form.serialize();
 
         $.ajax({
-            url: "{% url 'book_appointment' %}",
+            url: "/book-appointment/" ,
             type: "POST",
             data: data,
             success: function(resp) {
@@ -142,7 +142,7 @@
                 else if (resp.status == 400) {
                     alert_show("warning", resp.error);
                     let select = $("#doctor");
-                    select.addAttr("disabled");
+                    select.attr("disabled", true);
                 }
             }
         })
